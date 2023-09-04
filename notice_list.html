@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>무스 공지</title>
+</head>
+<body>
+    <div id="list"></div>
+</body>
+</html>
+
+<script type="module">
+    (function() {
+        const ajax_obj = {
+            get_list : async () => {
+                await fetch('https://mousse.kunpany.com/v1/infos/getNoticeList')
+                .then((response) => response.json())
+                .then((item) => document.querySelector("#list").innerHTML=item.data[0].text)
+                .catch((error) => console.log("error:", error));
+            }
+        }
+
+        const init = () => {
+            ajax_obj.get_list();
+        }
+        init();
+    })();
+</script>
