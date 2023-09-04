@@ -16,7 +16,7 @@
             get_list : async () => {
                 await fetch('https://mousse.kunpany.com/v1/infos/getNoticeList')
                 .then((response) => response.json())
-                .then((item) => document.querySelector("#list").innerHTML=item.data[0].text)
+                .then((item) => document.querySelector("#list").innerHTML=item.data)
                 .catch((error) => console.log("error:", error));
             }
         }
