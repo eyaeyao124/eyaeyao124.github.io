@@ -6,17 +6,22 @@
     <title>무스 공지</title>
 </head>
 <body>
-    <div id="list"></div>
+    <div id="list">
+        
+    </div>
 </body>
 </html>
 
 <script type="module">
     (function() {
+        const list = [];
         const ajax_obj = {
             get_list : async () => {
                 await fetch('https://mousse.kunpany.com/v1/infos/getNoticeList')
                 .then((response) => response.json())
-                .then((item) => document.querySelector("#list").innerHTML=item.data)
+                .then((item) => //document.querySelector("#list").innerHTML=item.data
+                    console.log("찍혀라",item)
+                )
                 .catch((error) => console.log("error:", error));
             }
         }
