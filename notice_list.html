@@ -66,17 +66,17 @@
 
         const list = [];
 
-        window.onload = () => {
+        // window.onload = () => {
 
-            const accordion = document.getElementsByClassName('open_btn');
+        //     const accordion = document.getElementsByClassName('open_btn');
 
-            for (let i=0; i<accordion.length; i++) {
-                accordion[i].addEventListener('click', function (event) {
-                    html_func_obj.open_list(event);
-                })
-            }
+        //     for (let i=0; i<accordion.length; i++) {
+        //         accordion[i].addEventListener('click', function (event) {
+        //             html_func_obj.open_list(event);
+        //         })
+        //     }
 
-        }
+        // }
         
 
         const ajax_obj = {
@@ -232,6 +232,16 @@
                     `
                     )
                 })
+
+                const accordion = document.getElementsByClassName('open_btn');
+
+                for (let i=0; i<accordion.length; i++) {
+                    accordion[i].addEventListener('click', function (event) {
+                        html_func_obj.open_list(event);
+                    })
+                }
+
+
             },
 
             open_list : (e) => {
