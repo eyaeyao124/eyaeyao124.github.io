@@ -4,15 +4,43 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>무스 공지</title>
+    <style>
+        .open{
+            display: none;
+        }
+
+        .active{
+            display: block;
+        }
+    </style>
 </head>
 <body>
     <div id="list">
-        
+        <table>
+            <thead>
+                <tr>
+                    <td>No</td>
+                    <td>공지 제목</td>
+                    <td>공지 일자</td>
+                    <td>상단 고정</td>
+                    <td>펼치기</td>
+                </tr>
+            </thead>
+            <tbody id="list_box">
+                <!-- <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr> -->
+            </tbody>
+        </table>
     </div>
 </body>
 </html>
 
-<script type="module">
+<!-- <script type="module">
     (function() {
         const list = [];
         const ajax_obj = {
@@ -24,6 +52,194 @@
                 )
                 .catch((error) => console.log("error:", error));
             }
+        }
+
+        const init = () => {
+            ajax_obj.get_list();
+        }
+        init();
+    })();
+</script> -->
+
+<script type="module">
+    (function() {
+
+        const list = [];
+
+        window.onload = () => {
+
+            const accordion = document.getElementsByClassName('open_btn');
+
+            for (let i=0; i<accordion.length; i++) {
+                accordion[i].addEventListener('click', function (event) {
+                    html_func_obj.open_list(event);
+                })
+            }
+
+        }
+        
+
+        const ajax_obj = {
+            // get_list : () => {
+            //     const item = {
+            //         "result": true,
+            //         "stat": "SUCCESS",
+            //         "data": [
+            //             {
+            //             "id": 12,
+            //             "title": "공지올리기테스트",
+            //             "createdAt": "2023-08-22T11:36:38.000Z",
+            //             "content": "공지올리기테스트",
+            //             "isHold": "true"
+            //             },
+            //             {
+            //             "id": 9,
+            //             "title": "공지올리기테스트",
+            //             "createdAt": "2023-08-22T11:33:49.000Z",
+            //             "content": "공지올리기테스트",
+            //             "isHold": "true"
+            //             },
+            //             {
+            //             "id": 4,
+            //             "title": "홀딩공지2",
+            //             "createdAt": "2023-08-13T12:38:02.000Z",
+            //             "content": "홀딩공지2",
+            //             "isHold": "true"
+            //             },
+            //             {
+            //             "id": 2,
+            //             "title": "홀딩공지",
+            //             "createdAt": "2023-08-13T12:32:38.000Z",
+            //             "content": "홀딩된 공지에요",
+            //             "isHold": "true"
+            //             },
+            //             {
+            //             "id": 1,
+            //             "title": "테스트",
+            //             "createdAt": "2023-08-05T04:00:00.000Z",
+            //             "content": "공지사항입니다.",
+            //             "isHold": "true"
+            //             },
+            //             {
+            //             "id": 11,
+            //             "title": "고쳐봐라",
+            //             "createdAt": "2023-08-22T11:36:05.000Z",
+            //             "content": "고칠내",
+            //             "isHold": "false"
+            //             },
+            //             {
+            //             "id": 10,
+            //             "title": "공지올리기테스트",
+            //             "createdAt": "2023-08-22T11:34:10.000Z",
+            //             "content": "공지올리기테스트",
+            //             "isHold": "false"
+            //             },
+            //             {
+            //             "id": 8,
+            //             "title": "공지올리기테스트",
+            //             "createdAt": "2023-08-22T11:33:21.000Z",
+            //             "content": "공지올리기테스트",
+            //             "isHold": "false"
+            //             },
+            //             {
+            //             "id": 7,
+            //             "title": "공지올리기테스트",
+            //             "createdAt": "2023-08-22T11:32:14.000Z",
+            //             "content": "공지올리기테스트",
+            //             "isHold": "false"
+            //             },
+            //             {
+            //             "id": 6,
+            //             "title": "공지올리기테스트",
+            //             "createdAt": "2023-08-22T11:30:59.000Z",
+            //             "content": "공지올리기테스트",
+            //             "isHold": "false"
+            //             },
+            //             {
+            //             "id": 5,
+            //             "title": "야옹",
+            //             "createdAt": "2023-08-22T11:27:06.000Z",
+            //             "content": "오",
+            //             "isHold": "false"
+            //             },
+            //             {
+            //             "id": 3,
+            //             "title": "일반공지1",
+            //             "createdAt": "2023-08-13T12:38:02.000Z",
+            //             "content": "일반공지2",
+            //             "isHold": "false"
+            //             }
+            //         ]
+            //     }
+                
+
+            //     html_func_obj.add_list(item.data);
+                
+            // },
+
+            get_list : async () => {
+                await fetch('https://mousse.kunpany.com/v1/infos/getNoticeList')
+                .then((response) => response.json())
+                .then((item) => {//document.querySelector("#list").innerHTML=item.data
+                    console.log("찍혀라",item)
+                    html_func_obj.add_list(item.data)
+                })
+                .catch((error) => console.log("error:", error));
+            }
+        }
+
+        const html_func_obj = {
+            add_list : (item) => {
+                console.log("찍기",item)
+                item.map((i,index) => {
+                    document.querySelector("#list_box").insertAdjacentHTML("beforeend",
+                    `<tr>
+                        <td>${i.id}</td>
+                        <td>${i.title}</td>
+                        <td>${new Date(i.createdAt).toISOString().split('T')[0]}</td>
+                        <td>${i.isHold == 'true' ? '고정' : '비고정'}</td>
+                        <td>
+                            <button type="button" class="open_btn ${index}">펼치기</button>
+                        </td>
+                    </tr> 
+                    <tr class="open">
+                        <td>
+                            <p>
+                                공지제목
+                            </p>
+                            <input type="text" value="${i.title}">
+                            <p>
+                                공지내용
+                            </p>
+                            <textarea name="" rows="10" cols="60">${i.content}</textarea>
+                            <p>
+                                상단 고정 여부
+                            </p>
+                            <div>
+                                <label>
+                                    고정 <input type="radio" name="hold_${i.id}" ${i.isHold == 'true' ? 'checked=checked' : ''}>
+                                </label>    
+                                <label>
+                                    비고정 <input type="radio" name="hold_${i.id}" ${i.isHold == 'false' ? 'checked=checked' : ''}>
+                                </label>
+                            </div>
+                            <div>
+                                <button type="button">수정</button>
+                                <button type="button">삭제</button>
+                            </div>
+                        </td>
+                    </tr>
+                    `
+                    )
+                })
+            },
+
+            open_list : (e) => {
+
+                e.currentTarget.parentElement.parentElement.nextElementSibling.classList.toggle('active');
+            }
+
+
         }
 
         const init = () => {
