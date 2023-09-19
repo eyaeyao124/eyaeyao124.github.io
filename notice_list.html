@@ -286,7 +286,7 @@
 
                 let notice_title = document.getElementById('notice_title').value;
                 let notice_desc = document.getElementById('notice_desc').value;
-                let notice_hold = document.querySelector('input[name="insert_hold"]:checked').value;
+                let notice_hold = document.querySelector('input[name="insert_hold"]:checked').value == 'false' ? false : true;
 
                 await fetch("https://mousse.kunpany.com/v1/infos/postNotice", {
                 method: "POST",
