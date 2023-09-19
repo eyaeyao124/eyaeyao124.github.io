@@ -298,7 +298,8 @@
                     content : notice_desc,
                     isHold : notice_hold
                 }),
-                }).then((response) => console.log(response));
+                }).then((response) => {alert('공지가 등록되었습니다'); location.reload();})
+                .catch((error) => console.log("error:", error));
 
 
             }
