@@ -10,7 +10,7 @@
         }
 
         .active{
-            display: block;
+            display: table-row;
         }
     </style>
     <link rel="stylesheet" href="./notice.css">
@@ -232,30 +232,32 @@
                         </td>
                     </tr> 
                     <tr class="open">
-                        <td>
-                            <p class="form_in_title">
-                                공지제목
-                            </p>
-                            <input type="text" value="${i.title}">
-                            <p class="form_in_title">
-                                공지내용
-                            </p>
-                            <textarea name="" rows="10" cols="60">${i.content}</textarea>
-                            <p class="form_in_title">
-                                상단 고정 여부
-                            </p>
-                            <div>
-                                <label>
-                                    고정 <input type="radio" name="hold_${i.id}" ${i.isHold == 'true' ? 'checked=checked' : ''}>
-                                </label>    
-                                <label>
-                                    비고정 <input type="radio" name="hold_${i.id}" ${i.isHold == 'false' ? 'checked=checked' : ''}>
-                                </label>
-                            </div>
-                            <div>
-                                <button type="button" class="modify_btn" data-id="${i.id}">수정</button>
-                                <button type="button">삭제</button>
-                            </div>
+                        <td colspan="5">
+                            <form name="modify_form_${i.id}">
+                                <p class="form_in_title">
+                                    공지제목
+                                </p>
+                                <input type="text" value="${i.title}">
+                                <p class="form_in_title">
+                                    공지내용
+                                </p>
+                                <textarea name="" rows="10" cols="60">${i.content}</textarea>
+                                <p class="form_in_title">
+                                    상단 고정 여부
+                                </p>
+                                <div>
+                                    <label>
+                                        고정 <input type="radio" name="hold_${i.id}" ${i.isHold == 'true' ? 'checked=checked' : ''} value="true">
+                                    </label>    
+                                    <label>
+                                        비고정 <input type="radio" name="hold_${i.id}" ${i.isHold == 'false' ? 'checked=checked' : ''} value="false">
+                                    </label>
+                                </div>
+                                <div class="inside_btn_wrapepr">
+                                    <button type="button" class="modify_btn" data-id="${i.id}">수정</button>
+                                    <button type="button" class="delete_btn" data-id="${i.id}">삭제</button>
+                                </div>
+                            </form>
                         </td>
                     </tr>
                     `
@@ -285,21 +287,24 @@
             },
 
             modify_list : async (e) => {
-                console.log("수정값 :",e)
-                // await fetch("https://jsonplaceholder.typicode.com/posts/1", {
-                // method: "PATCH",
-                // headers: {
-                //     "Content-Type": "application/json",
-                // },
-                // body: JSON.stringify({
-                //     id:,
-                //     title : notice_title,
-                //     content : notice_desc,
-                //     isHold : notice_hold
-                // }),
-                // })
-                // .then((response) => response.json())
-                // .then((data) => console.log(data));
+                const formId = Number(e.target.dataset.id);
+                const formName = document.forms[`modify_form_${formId}`];
+                const data = {
+                    id: formId,
+                    title : formName[0].value,
+                    content : formName[1].value,
+                    isHold : formName[2].checked
+                }
+                
+                await fetch("https://mousse.kunpany.com/v1/infos/patchNotice", {
+                method: "PATCH",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(data),
+                })
+                .then((response) => response.json())
+                .then((data) => console.log(data));
                 
             },
 

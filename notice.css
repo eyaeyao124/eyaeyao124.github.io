@@ -68,3 +68,40 @@ textarea, input[type='text']{
     cursor: pointer;
     font-size: 1rem;
 }
+
+.inside_btn_wrapepr{
+    margin-top: 15px;
+    margin-bottom: 15px;
+    padding-bottom: 15px;
+    padding-top: 15px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    border-bottom: 1px solid #eee;
+    border-top: 1px solid #eee;
+}
+
+.modify_btn{
+    background-color: #52a3f7;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    color: #FFF;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.delete_btn{
+    background-color: rgb(185, 29, 29);
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    color: #FFF;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+/* 테이블 */
+.form_box > table {
+    width: 100%;
+}
