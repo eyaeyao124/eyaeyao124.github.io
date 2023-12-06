@@ -96,6 +96,7 @@
     (function() {
 
         const list = [];
+        let size = 1;
 
         window.onload = () => {
 
@@ -287,6 +288,10 @@
             },
 
             modify_list : async (e) => {
+                const con_msg = confirm("공지를 수정하시겠습니까?");
+                
+                if(con_msg == true){
+
                 const formId = Number(e.target.dataset.id);
                 const formName = document.forms[`modify_form_${formId}`];
                 const data = {
@@ -303,8 +308,10 @@
                 },
                 body: JSON.stringify(data),
                 })
-                .then((response) => response.json())
-                .then((data) => console.log(data));
+                .then((response) => {alert('공지가 수정되었습니다'); location.reload();})
+                .catch((error) => console.log("error:", error));
+
+                }
                 
             },
 
