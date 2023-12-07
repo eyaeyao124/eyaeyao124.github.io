@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>무스 공지</title>
+    <title>무스 FAQ</title>
     <style>
         .open{
             display: none;
@@ -13,24 +13,24 @@
             display: table-row;
         }
     </style>
-    <link rel="stylesheet" href="./notice.css">
+    <link rel="stylesheet" href="./faq.css">
 </head>
 <body>
     <div id="list">
-        <h1>무스 공지사항 어드민 페이지</h1>
-        <p>*펼치기 버튼 클릭하여 수정 및 삭제 가능 / 공지 입력란에서 공지 추가 가능</p>
+        <h1>무스 FAQ 어드민 페이지</h1>
+        <p>*펼치기 버튼 클릭하여 수정 및 삭제 가능 / 공지 입력란에서 FAQ 추가 가능</p>
 
         <h4 class="form_title">공지 입력</h4>
         
         <div class="form_box">
             <p class="form_in_title">
-                공지제목
+                FAQ제목
             </p>
             <input name="notice_title" type="text" value="" id="notice_title">
             <p class="form_in_title">
-                공지내용
+                FAQ내용
             </p>
-            <textarea name="notice_desc" rows="10" cols="60" id="notice_desc"></textarea>
+            <textarea name="faq_desc" rows="10" cols="60" id="faq_desc"></textarea>
             <p class="form_in_title">
                 상단 고정 여부
             </p>
@@ -49,16 +49,16 @@
 
         <hr>
 
-        <h4 class="form_title">공지 리스트</h4>
+        <h4 class="form_title">FAQ 리스트</h4>
 
         <div class="form_box">
             <table>
                 <thead>
                     <tr>
                         <td>No</td>
-                        <td>공지 제목</td>
-                        <td>공지 일자</td>
-                        <td>상단 고정</td>
+                        <td>FAQ 제목</td>
+                        <td>FAQ 일자</td>
+                        <td>FAQ 고정</td>
                         <td>펼치기</td>
                     </tr>
                 </thead>
@@ -96,8 +96,7 @@
     (function() {
 
         const list = [];
-        let size = 0;
-        const size_num = 15;
+        let size = 1;
 
         window.onload = () => {
 
@@ -209,37 +208,19 @@
             // },
 
             get_list : async () => {
-                await fetch('https://mousse.kunpany.com/v1/infos/getNoticeList?size=1')
+                await fetch('https://mousse.kunpany.com/v1/infos/getNoticeList')
                 .then((response) => response.json())
                 .then((item) => {//document.querySelector("#list").innerHTML=item.data
+                    console.log("찍혀라",item)
                     html_func_obj.add_list(item.data)
                 })
                 .catch((error) => console.log("error:", error));
-            },
-
-            more_list : async () => {
-                await fetch('https://mousse.kunpany.com/v1/infos/getNoticeList?size='+(size+size_num))
-                .then((response) => response.json())
-                .then((item) => {//document.querySelector("#list").innerHTML=item.data
-                    html_func_obj.more_add_list(item.data)
-                })
-                .catch((error) => console.log("error:", error));
-            },
-
+            }
         }
 
         const html_func_obj = {
             add_list : (item) => {
 
-                if(!item || item.length === 0) {
-                    document.querySelector("#list_box").insertAdjacentHTML("beforeend",
-                    `<tr>
-                        <td>공지가 없거나 에러가 발생</td>
-                    </tr>`
-                    )
-                    return false;
-                }
-
                 item.map((i,index) => {
                     document.querySelector("#list_box").insertAdjacentHTML("beforeend",
                     `<tr>
@@ -299,77 +280,6 @@
                     })
                 }
 
-                html_func_obj.make_more_btn();
-
-            },
-
-            more_add_list : (item) => {
-
-                if(!item || item.length === 0) {
-                    document.querySelector("#more_btn").remove();
-                    return false;
-                }
-
-                item.map((i,index) => {
-                    document.querySelector("#list_box").insertAdjacentHTML("beforeend",
-                    `<tr>
-                        <td>${i.id}</td>
-                        <td>${i.title}</td>
-                        <td>${new Date(i.createdAt).toISOString().split('T')[0]}</td>
-                        <td>${i.isHold == 'true' ? '고정' : '비고정'}</td>
-                        <td>
-                            <button type="button" class="open_btn ${index}">펼치기</button>
-                        </td>
-                    </tr> 
-                    <tr class="open">
-                        <td colspan="5">
-                            <form name="modify_form_${i.id}">
-                                <p class="form_in_title">
-                                    공지제목
-                                </p>
-                                <input type="text" value="${i.title}">
-                                <p class="form_in_title">
-                                    공지내용
-                                </p>
-                                <textarea name="" rows="10" cols="60">${i.content}</textarea>
-                                <p class="form_in_title">
-                                    상단 고정 여부
-                                </p>
-                                <div>
-                                    <label>
-                                        고정 <input type="radio" name="hold_${i.id}" ${i.isHold == 'true' ? 'checked=checked' : ''} value="true">
-                                    </label>    
-                                    <label>
-                                        비고정 <input type="radio" name="hold_${i.id}" ${i.isHold == 'false' ? 'checked=checked' : ''} value="false">
-                                    </label>
-                                </div>
-                                <div class="inside_btn_wrapepr">
-                                    <button type="button" class="modify_btn" data-id="${i.id}">수정</button>
-                                    <button type="button" class="delete_btn" data-id="${i.id}">삭제</button>
-                                </div>
-                            </form>
-                        </td>
-                    </tr>
-                    `
-                    )
-                })
-
-                const accordion = document.getElementsByClassName('open_btn');
-                const modify = document.getElementsByClassName('modify_btn');
-
-                for (let i=0; i<accordion.length; i++) {
-                    accordion[i].addEventListener('click', function (event) {
-                        html_func_obj.open_list(event);
-                    })
-                }
-
-                for (let i=0; i<modify.length; i++) {
-                    modify[i].addEventListener('click', function (event) {
-                        html_func_obj.modify_list(event);
-                    })
-                }
-
-                size = size+size_num;
 
             },
 
@@ -378,10 +288,6 @@
             },
 
             modify_list : async (e) => {
-                const con_msg = confirm("공지를 수정하시겠습니까?");
-                
-                if(con_msg == true){
-
                 const formId = Number(e.target.dataset.id);
                 const formName = document.forms[`modify_form_${formId}`];
                 const data = {
@@ -400,8 +306,6 @@
                 })
                 .then((response) => {alert('공지가 수정되었습니다'); location.reload();})
                 .catch((error) => console.log("error:", error));
-
-                }
                 
             },
 
@@ -410,12 +314,12 @@
                 if(document.getElementById('notice_title').value == "") {
                     return alert("제목을 입력해주세요.")
                 }
-                if(document.getElementById('notice_desc').value == "") {
+                if(document.getElementById('faq_desc').value == "") {
                     return alert("공지내용을 입력해주세요.")
                 }
 
                 let notice_title = document.getElementById('notice_title').value;
-                let notice_desc = document.getElementById('notice_desc').value;
+                let faq_desc = document.getElementById('faq_desc').value;
                 let notice_hold = document.querySelector('input[name="insert_hold"]:checked').value == 'false' ? false : true;
 
                 await fetch("https://mousse.kunpany.com/v1/infos/postNotice", {
@@ -425,25 +329,13 @@
                 },
                 body: JSON.stringify({
                     title : notice_title,
-                    content : notice_desc,
+                    content : faq_desc,
                     isHold : notice_hold
                 }),
                 }).then((response) => {alert('공지가 등록되었습니다'); location.reload();})
                 .catch((error) => console.log("error:", error));
 
 
-            },
-
-            make_more_btn : () => {
-                document.querySelectorAll(".form_box")[1].insertAdjacentHTML("beforeend",
-                    `<div id="more_btn">더 불러오기</div>`
-                )
-
-                const more = document.querySelector('#more_btn');
-
-                more.addEventListener('click', function () {
-                    ajax_obj.more_list();
-                })
             }
 
 
