@@ -101,6 +101,15 @@ textarea, input[type='text']{
     cursor: pointer;
 }
 
+#more_btn{
+    border: 1px solid #EEE;
+    text-align: center;
+    padding: 14px;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-top: 15px;
+}
+
 /* 테이블 */
 .form_box > table {
     width: 100%;
