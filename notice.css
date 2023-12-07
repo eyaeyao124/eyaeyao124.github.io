@@ -116,5 +116,10 @@ textarea, input[type='text']{
 }
 
 td{
-    padding: 5px;
+    padding: 10px 5px;
+}
+
+.modify_form_td{
+    border-top: 1px solid #EEE;
+    padding: 0 5px;
 }

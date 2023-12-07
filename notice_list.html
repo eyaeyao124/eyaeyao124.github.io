@@ -243,16 +243,16 @@
                 item.map((i,index) => {
                     document.querySelector("#list_box").insertAdjacentHTML("beforeend",
                     `<tr>
-                        <td>${i.id}</td>
-                        <td>${i.title}</td>
-                        <td>${new Date(i.createdAt).toISOString().split('T')[0]}</td>
-                        <td>${i.isHold == 'true' ? '고정' : '비고정'}</td>
-                        <td>
+                        <td width="10%">${i.id}</td>
+                        <td width="50%">${i.title}</td>
+                        <td width="20%">${new Date(i.createdAt).toISOString().split('T')[0]}</td>
+                        <td width="10%">${i.isHold == 'true' ? '고정' : '비고정'}</td>
+                        <td width="10%">
                             <button type="button" class="open_btn ${index}">펼치기</button>
                         </td>
                     </tr> 
                     <tr class="open">
-                        <td colspan="5">
+                        <td colspan="5" class="modify_form_td">
                             <form name="modify_form_${i.id}">
                                 <p class="form_in_title">
                                     공지제목
@@ -261,7 +261,7 @@
                                 <p class="form_in_title">
                                     공지내용
                                 </p>
-                                <textarea name="" rows="10" cols="60">${i.content}</textarea>
+                                <textarea name="" rows="25" cols="60">${i.content}</textarea>
                                 <p class="form_in_title">
                                     상단 고정 여부
                                 </p>
