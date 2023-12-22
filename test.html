@@ -1,0 +1,16 @@
+<script type="module">
+(async () => {
+let response = await fetch('https://mousse.kunpany.com/image/faq/165006307895300/-1');
+
+let blob = await response.blob(); // 응답을 Blob 객체 형태로 다운로드받습니다.
+
+// 다운로드받은 Blob을 담을 <img>를 만듭니다.
+let img = document.createElement('img');
+img.style = 'position:fixed;top:10px;left:10px;width:100px';
+document.body.append(img);
+
+// 이미지를 화면에 보여줍니다.
+img.src = URL.createObjectURL(blob);
+
+})();
+</script>
