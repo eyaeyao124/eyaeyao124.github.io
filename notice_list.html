@@ -98,6 +98,8 @@
         const list = [];
         let size = 0;
         const size_num = 15;
+        let accordion;
+        let modify;
 
         window.onload = () => {
 
@@ -106,6 +108,25 @@
             insert_btn.addEventListener('click', function (event) {
                 html_func_obj.insert_notice(event);
             })
+
+            // window.addEventListener("click", handleClick);
+            // window.removeEventListener("click", handleClick);
+
+            for (let i=0; i<accordion.length; i++) {
+                accordion[i].addEventListener('click', function (event) {
+                    //html_func_obj.open_list(event);
+                    window.addEventListener("click", handleClick);
+                    window.removeEventListener("click", handleClick);
+                })
+            }
+
+            for (let i=0; i<modify.length; i++) {
+                modify[i].addEventListener('click', function (event) {
+                    //html_func_obj.modify_list(event);
+                    window.addEventListener("click", handleClick);
+                    window.removeEventListener("click", handleClick);
+                })
+            }
 
         }
         
@@ -284,20 +305,20 @@
                     )
                 })
 
-                const accordion = document.getElementsByClassName('open_btn');
-                const modify = document.getElementsByClassName('modify_btn');
+                accordion = document.getElementsByClassName('open_btn');
+                modify = document.getElementsByClassName('modify_btn');
 
-                for (let i=0; i<accordion.length; i++) {
-                    accordion[i].addEventListener('click', function (event) {
-                        html_func_obj.open_list(event);
-                    })
-                }
+                // for (let i=0; i<accordion.length; i++) {
+                //     accordion[i].addEventListener('click', function (event) {
+                //         html_func_obj.open_list(event);
+                //     })
+                // }
 
-                for (let i=0; i<modify.length; i++) {
-                    modify[i].addEventListener('click', function (event) {
-                        html_func_obj.modify_list(event);
-                    })
-                }
+                // for (let i=0; i<modify.length; i++) {
+                //     modify[i].addEventListener('click', function (event) {
+                //         html_func_obj.modify_list(event);
+                //     })
+                // }
 
                 html_func_obj.make_more_btn();
 
@@ -354,20 +375,20 @@
                     )
                 })
 
-                const accordion = document.getElementsByClassName('open_btn');
-                const modify = document.getElementsByClassName('modify_btn');
+                // accordion = document.getElementsByClassName('open_btn');
+                // modify = document.getElementsByClassName('modify_btn');
 
-                for (let i=0; i<accordion.length; i++) {
-                    accordion[i].addEventListener('click', function (event) {
-                        html_func_obj.open_list(event);
-                    })
-                }
+                // for (let i=0; i<accordion.length; i++) {
+                //     accordion[i].addEventListener('click', function (event) {
+                //         html_func_obj.open_list(event);
+                //     })
+                // }
 
-                for (let i=0; i<modify.length; i++) {
-                    modify[i].addEventListener('click', function (event) {
-                        html_func_obj.modify_list(event);
-                    })
-                }
+                // for (let i=0; i<modify.length; i++) {
+                //     modify[i].addEventListener('click', function (event) {
+                //         html_func_obj.modify_list(event);
+                //     })
+                // }
 
                 size = size+size_num;
 
