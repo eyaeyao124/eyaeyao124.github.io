@@ -108,6 +108,9 @@
             })
 
         }
+
+        window.addEventListener("test", null, options);
+        window.removeEventListener("test", null, options);
         
 
         const ajax_obj = {
@@ -379,16 +382,28 @@
                 const accordion = document.getElementsByClassName('open_btn');
                 const modify = document.getElementsByClassName('modify_btn');
 
+                // for (let i=0; i<accordion.length; i++) {
+                //     accordion[i].addEventListener('click', function (event) {
+                //         html_func_obj.open_list(event);
+                //     })
+                // }
+
+                // for (let i=0; i<modify.length; i++) {
+                //     modify[i].addEventListener('click', function (event) {
+                //         html_func_obj.modify_list(event);
+                //     })
+                // }
+
                 for (let i=0; i<accordion.length; i++) {
-                    accordion[i].addEventListener('click', function (event) {
+                    accordion[i].onclick = function(event) {
                         html_func_obj.open_list(event);
-                    })
+                    }
                 }
 
                 for (let i=0; i<modify.length; i++) {
-                    modify[i].addEventListener('click', function (event) {
+                    modify[i].onclick = function(event) {
                         html_func_obj.modify_list(event);
-                    })
+                    }
                 }
             },
 
