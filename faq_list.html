@@ -245,7 +245,7 @@
                         <td width="10%">${i.id}</td>
                         <td width="40%">${i.title}</td>
                         <td width="20%">${new Date(i.createdAt).toISOString().split('T')[0]}</td>
-                        <td width="10%"><img src="${i.faq_content}"></td>
+                        <td width="10%"><img src="https://mousse.kunpany.com/image/${i.faq_content}"></td>
                         <td width="10%">${i.isHold == 'true' ? '고정' : '비고정'}</td>
                         <td width="10%">
                             <button type="button" class="open_btn ${index}">펼치기</button>
