@@ -17,16 +17,16 @@
 </head>
 <body>
     <div id="list">
-        <h1>무스 FAQ 어드민 페이지</h1>
-        <p>*펼치기 버튼 클릭하여 수정 및 삭제 가능 / 공지 입력란에서 FAQ 추가 가능</p>
+        <h1>무스 FAQ사항 어드민 페이지</h1>
+        <p>*펼치기 버튼 클릭하여 수정 및 삭제 가능 / FAQ 입력란에서 FAQ 추가 가능</p>
 
-        <h4 class="form_title">공지 입력</h4>
+        <h4 class="form_title">FAQ 입력</h4>
         
         <div class="form_box">
             <p class="form_in_title">
                 FAQ제목
             </p>
-            <input name="notice_title" type="text" value="" id="notice_title">
+            <input name="faq_title" type="text" value="" id="faq_title">
             <p class="form_in_title">
                 FAQ내용
             </p>
@@ -58,7 +58,7 @@
                         <td>No</td>
                         <td>FAQ 제목</td>
                         <td>FAQ 일자</td>
-                        <td>FAQ 고정</td>
+                        <td>상단 고정</td>
                         <td>펼치기</td>
                     </tr>
                 </thead>
@@ -76,7 +76,7 @@
         const list = [];
         const ajax_obj = {
             get_list : async () => {
-                await fetch('https://mousse.kunpany.com/v1/infos/getNoticeList')
+                await fetch('https://mousse.kunpany.com/v1/infos/getfaqList')
                 .then((response) => response.json())
                 .then((item) => //document.querySelector("#list").innerHTML=item.data
                     console.log("찍혀라",item)
@@ -96,18 +96,18 @@
     (function() {
 
         const list = [];
-        let size = 1;
+        let size = 0;
+        const size_num = 15;
 
         window.onload = () => {
 
             const insert_btn = document.querySelector("#insert_btn");
 
             insert_btn.addEventListener('click', function (event) {
-                html_func_obj.insert_notice(event);
+                html_func_obj.insert_faq(event);
             })
 
         }
-        
 
         const ajax_obj = {
             // get_list : () => {
@@ -117,37 +117,37 @@
             //         "data": [
             //             {
             //             "id": 12,
-            //             "title": "공지올리기테스트",
+            //             "title": "FAQ올리기테스트",
             //             "createdAt": "2023-08-22T11:36:38.000Z",
-            //             "content": "공지올리기테스트",
+            //             "content": "FAQ올리기테스트",
             //             "isHold": "true"
             //             },
             //             {
             //             "id": 9,
-            //             "title": "공지올리기테스트",
+            //             "title": "FAQ올리기테스트",
             //             "createdAt": "2023-08-22T11:33:49.000Z",
-            //             "content": "공지올리기테스트",
+            //             "content": "FAQ올리기테스트",
             //             "isHold": "true"
             //             },
             //             {
             //             "id": 4,
-            //             "title": "홀딩공지2",
+            //             "title": "홀딩FAQ2",
             //             "createdAt": "2023-08-13T12:38:02.000Z",
-            //             "content": "홀딩공지2",
+            //             "content": "홀딩FAQ2",
             //             "isHold": "true"
             //             },
             //             {
             //             "id": 2,
-            //             "title": "홀딩공지",
+            //             "title": "홀딩FAQ",
             //             "createdAt": "2023-08-13T12:32:38.000Z",
-            //             "content": "홀딩된 공지에요",
+            //             "content": "홀딩된 FAQ에요",
             //             "isHold": "true"
             //             },
             //             {
             //             "id": 1,
             //             "title": "테스트",
             //             "createdAt": "2023-08-05T04:00:00.000Z",
-            //             "content": "공지사항입니다.",
+            //             "content": "FAQ사항입니다.",
             //             "isHold": "true"
             //             },
             //             {
@@ -159,30 +159,30 @@
             //             },
             //             {
             //             "id": 10,
-            //             "title": "공지올리기테스트",
+            //             "title": "FAQ올리기테스트",
             //             "createdAt": "2023-08-22T11:34:10.000Z",
-            //             "content": "공지올리기테스트",
+            //             "content": "FAQ올리기테스트",
             //             "isHold": "false"
             //             },
             //             {
             //             "id": 8,
-            //             "title": "공지올리기테스트",
+            //             "title": "FAQ올리기테스트",
             //             "createdAt": "2023-08-22T11:33:21.000Z",
-            //             "content": "공지올리기테스트",
+            //             "content": "FAQ올리기테스트",
             //             "isHold": "false"
             //             },
             //             {
             //             "id": 7,
-            //             "title": "공지올리기테스트",
+            //             "title": "FAQ올리기테스트",
             //             "createdAt": "2023-08-22T11:32:14.000Z",
-            //             "content": "공지올리기테스트",
+            //             "content": "FAQ올리기테스트",
             //             "isHold": "false"
             //             },
             //             {
             //             "id": 6,
-            //             "title": "공지올리기테스트",
+            //             "title": "FAQ올리기테스트",
             //             "createdAt": "2023-08-22T11:30:59.000Z",
-            //             "content": "공지올리기테스트",
+            //             "content": "FAQ올리기테스트",
             //             "isHold": "false"
             //             },
             //             {
@@ -194,9 +194,9 @@
             //             },
             //             {
             //             "id": 3,
-            //             "title": "일반공지1",
+            //             "title": "일반FAQ1",
             //             "createdAt": "2023-08-13T12:38:02.000Z",
-            //             "content": "일반공지2",
+            //             "content": "일반FAQ2",
             //             "isHold": "false"
             //             }
             //         ]
@@ -208,18 +208,108 @@
             // },
 
             get_list : async () => {
-                await fetch('https://mousse.kunpany.com/v1/infos/getNoticeList')
+                await fetch('https://mousse.kunpany.com/v1/infos/getFAQList?size=0')
                 .then((response) => response.json())
                 .then((item) => {//document.querySelector("#list").innerHTML=item.data
-                    console.log("찍혀라",item)
                     html_func_obj.add_list(item.data)
                 })
                 .catch((error) => console.log("error:", error));
-            }
+            },
+
+            more_list : async () => {
+                await fetch('https://mousse.kunpany.com/v1/infos/getfaqList?size='+(size+size_num))
+                .then((response) => response.json())
+                .then((item) => {//document.querySelector("#list").innerHTML=item.data
+                    html_func_obj.more_add_list(item.data)
+                })
+                .catch((error) => console.log("error:", error));
+            },
+
         }
 
         const html_func_obj = {
             add_list : (item) => {
+
+                if(!item || item.length === 0) {
+                    document.querySelector("#list_box").insertAdjacentHTML("beforeend",
+                    `<tr>
+                        <td>FAQ가 없거나 에러가 발생</td>
+                    </tr>`
+                    )
+                    return false;
+                }
+
+                item.map((i,index) => {
+                    document.querySelector("#list_box").insertAdjacentHTML("beforeend",
+                    `<tr>
+                        <td width="10%">${i.id}</td>
+                        <td width="40%">${i.title}</td>
+                        <td width="20%">${new Date(i.createdAt).toISOString().split('T')[0]}</td>
+                        <td width="10%"><img src="${i.faq_content}"></td>
+                        <td width="10%">${i.isHold == 'true' ? '고정' : '비고정'}</td>
+                        <td width="10%">
+                            <button type="button" class="open_btn ${index}">펼치기</button>
+                        </td>
+                    </tr> 
+                    <tr class="open">
+                        <td colspan="5" class="modify_form_td">
+                            <form name="modify_form_${i.id}">
+                                <p class="form_in_title">
+                                    FAQ제목
+                                </p>
+                                <input type="text" value="${i.title}">
+                                <p class="form_in_title">
+                                    FAQ내용
+                                </p>
+                                <textarea name="" rows="25" cols="60">${i.content}</textarea>
+                                <p class="form_in_title">
+                                    상단 고정 여부
+                                </p>
+                                <div>
+                                    <label>
+                                        고정 <input type="radio" name="hold_${i.id}" ${i.isHold == 'true' ? 'checked=checked' : ''} value="true">
+                                    </label>    
+                                    <label>
+                                        비고정 <input type="radio" name="hold_${i.id}" ${i.isHold == 'false' ? 'checked=checked' : ''} value="false">
+                                    </label>
+                                </div>
+                                <div class="inside_btn_wrapepr">
+                                    <button type="button" class="modify_btn" data-id="${i.id}">수정</button>
+                                    <button type="button" class="delete_btn" data-id="${i.id}">삭제</button>
+                                </div>
+                            </form>
+                        </td>
+                    </tr>
+                    `
+                    )
+                })
+
+                // const accordion = document.getElementsByClassName('open_btn');
+                // const modify = document.getElementsByClassName('modify_btn');
+
+                // for (let i=0; i<accordion.length; i++) {
+                //     accordion[i].addEventListener('click', function (event) {
+                //         html_func_obj.open_list(event);
+                //     })
+                // }
+
+                // for (let i=0; i<modify.length; i++) {
+                //     modify[i].addEventListener('click', function (event) {
+                //         html_func_obj.modify_list(event);
+                //     })
+                // }
+
+                html_func_obj.make_more_btn();
+                html_func_obj.add_ev_list();
+
+            },
+
+            more_add_list : (item) => {
+
+                if(!item || item.length === 0) {
+                    document.querySelector("#more_btn").remove();
+                    return false;
+                }
 
                 item.map((i,index) => {
                     document.querySelector("#list_box").insertAdjacentHTML("beforeend",
@@ -236,11 +326,11 @@
                         <td colspan="5">
                             <form name="modify_form_${i.id}">
                                 <p class="form_in_title">
-                                    공지제목
+                                    FAQ제목
                                 </p>
                                 <input type="text" value="${i.title}">
                                 <p class="form_in_title">
-                                    공지내용
+                                    FAQ내용
                                 </p>
                                 <textarea name="" rows="10" cols="60">${i.content}</textarea>
                                 <p class="form_in_title">
@@ -265,22 +355,53 @@
                     )
                 })
 
+                // const accordion = document.getElementsByClassName('open_btn');
+                // const modify = document.getElementsByClassName('modify_btn');
+
+                // for (let i=0; i<accordion.length; i++) {
+                //     accordion[i].addEventListener('click', function (event) {
+                //         html_func_obj.open_list(event);
+                //     })
+                // }
+
+                // for (let i=0; i<modify.length; i++) {
+                //     modify[i].addEventListener('click', function (event) {
+                //         html_func_obj.modify_list(event);
+                //     })
+                // }
+
+                size = size+size_num;
+                html_func_obj.add_ev_list();
+
+            },
+
+            add_ev_list : (e) => {
                 const accordion = document.getElementsByClassName('open_btn');
                 const modify = document.getElementsByClassName('modify_btn');
 
+                // for (let i=0; i<accordion.length; i++) {
+                //     accordion[i].addEventListener('click', function (event) {
+                //         html_func_obj.open_list(event);
+                //     })
+                // }
+
+                // for (let i=0; i<modify.length; i++) {
+                //     modify[i].addEventListener('click', function (event) {
+                //         html_func_obj.modify_list(event);
+                //     })
+                // }
+
                 for (let i=0; i<accordion.length; i++) {
-                    accordion[i].addEventListener('click', function (event) {
+                    accordion[i].onclick = function(event) {
                         html_func_obj.open_list(event);
-                    })
+                    }
                 }
 
                 for (let i=0; i<modify.length; i++) {
-                    modify[i].addEventListener('click', function (event) {
+                    modify[i].onclick = function(event) {
                         html_func_obj.modify_list(event);
-                    })
+                    }
                 }
-
-
             },
 
             open_list : (e) => {
@@ -288,6 +409,10 @@
             },
 
             modify_list : async (e) => {
+                const con_msg = confirm("FAQ를 수정하시겠습니까?");
+                
+                if(con_msg == true){
+
                 const formId = Number(e.target.dataset.id);
                 const formName = document.forms[`modify_form_${formId}`];
                 const data = {
@@ -297,45 +422,59 @@
                     isHold : formName[2].checked
                 }
                 
-                await fetch("https://mousse.kunpany.com/v1/infos/patchNotice", {
+                await fetch("https://mousse.kunpany.com/v1/infos/patchfaq", {
                 method: "PATCH",
                 headers: {
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify(data),
                 })
-                .then((response) => {alert('공지가 수정되었습니다'); location.reload();})
+                .then((response) => {alert('FAQ가 수정되었습니다'); location.reload();})
                 .catch((error) => console.log("error:", error));
+
+                }
                 
             },
 
-            insert_notice : async (e) => {
+            insert_faq : async (e) => {
 
-                if(document.getElementById('notice_title').value == "") {
+                if(document.getElementById('faq_title').value == "") {
                     return alert("제목을 입력해주세요.")
                 }
                 if(document.getElementById('faq_desc').value == "") {
-                    return alert("공지내용을 입력해주세요.")
+                    return alert("FAQ내용을 입력해주세요.")
                 }
 
-                let notice_title = document.getElementById('notice_title').value;
+                let faq_title = document.getElementById('faq_title').value;
                 let faq_desc = document.getElementById('faq_desc').value;
-                let notice_hold = document.querySelector('input[name="insert_hold"]:checked').value == 'false' ? false : true;
+                let faq_hold = document.querySelector('input[name="insert_hold"]:checked').value == 'false' ? false : true;
 
-                await fetch("https://mousse.kunpany.com/v1/infos/postNotice", {
+                await fetch("https://mousse.kunpany.com/v1/infos/postfaq", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify({
-                    title : notice_title,
+                    title : faq_title,
                     content : faq_desc,
-                    isHold : notice_hold
+                    isHold : faq_hold
                 }),
-                }).then((response) => {alert('공지가 등록되었습니다'); location.reload();})
+                }).then((response) => {alert('FAQ가 등록되었습니다'); location.reload();})
                 .catch((error) => console.log("error:", error));
 
 
+            },
+
+            make_more_btn : () => {
+                document.querySelectorAll(".form_box")[1].insertAdjacentHTML("beforeend",
+                    `<div id="more_btn">더 불러오기</div>`
+                )
+
+                const more = document.querySelector('#more_btn');
+
+                more.addEventListener('click', function () {
+                    ajax_obj.more_list();
+                })
             }
 
 
