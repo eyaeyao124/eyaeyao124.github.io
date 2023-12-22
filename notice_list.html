@@ -284,26 +284,23 @@
                     )
                 })
 
-                const accordion = document.getElementsByClassName('open_btn');
-                const modify = document.getElementsByClassName('modify_btn');
+                // const accordion = document.getElementsByClassName('open_btn');
+                // const modify = document.getElementsByClassName('modify_btn');
 
-                for (let i=0; i<accordion.length; i++) {
-                    accordion[i].addEventListener('click', function (event) {
-                        //html_func_obj.open_list(event);
-                        window.addEventListener("click", html_func_obj.open_list(event));
-                        window.removeEventListener("click", html_func_obj.open_list(event));
-                    })
-                }
+                // for (let i=0; i<accordion.length; i++) {
+                //     accordion[i].addEventListener('click', function (event) {
+                //         html_func_obj.open_list(event);
+                //     })
+                // }
 
-                for (let i=0; i<modify.length; i++) {
-                    modify[i].addEventListener('click', function (event) {
-                        //html_func_obj.modify_list(event);
-                        window.addEventListener("click", html_func_obj.modify_list(event));
-                        window.removeEventListener("click", html_func_obj.modify_list(event));
-                    })
-                }
+                // for (let i=0; i<modify.length; i++) {
+                //     modify[i].addEventListener('click', function (event) {
+                //         html_func_obj.modify_list(event);
+                //     })
+                // }
 
                 html_func_obj.make_more_btn();
+                html_func_obj.add_ev_list();
 
             },
 
@@ -358,27 +355,41 @@
                     )
                 })
 
+                // const accordion = document.getElementsByClassName('open_btn');
+                // const modify = document.getElementsByClassName('modify_btn');
+
+                // for (let i=0; i<accordion.length; i++) {
+                //     accordion[i].addEventListener('click', function (event) {
+                //         html_func_obj.open_list(event);
+                //     })
+                // }
+
+                // for (let i=0; i<modify.length; i++) {
+                //     modify[i].addEventListener('click', function (event) {
+                //         html_func_obj.modify_list(event);
+                //     })
+                // }
+
+                size = size+size_num;
+                html_func_obj.add_ev_list();
+
+            },
+
+            add_ev_list : (e) => {
                 const accordion = document.getElementsByClassName('open_btn');
                 const modify = document.getElementsByClassName('modify_btn');
 
                 for (let i=0; i<accordion.length; i++) {
                     accordion[i].addEventListener('click', function (event) {
-                        //html_func_obj.open_list(event);
-                        window.addEventListener("click", html_func_obj.open_list(event));
-                        window.removeEventListener("click", html_func_obj.open_list(event));
+                        html_func_obj.open_list(event);
                     })
                 }
 
                 for (let i=0; i<modify.length; i++) {
                     modify[i].addEventListener('click', function (event) {
-                        //html_func_obj.modify_list(event);
-                        window.addEventListener("click", html_func_obj.modify_list(event));
-                        window.removeEventListener("click", html_func_obj.modify_list(event));
+                        html_func_obj.modify_list(event);
                     })
                 }
-
-                size = size+size_num;
-
             },
 
             open_list : (e) => {
