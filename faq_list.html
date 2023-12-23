@@ -208,7 +208,13 @@
             // },
 
             get_list : async () => {
-                await fetch('https://mousse.kunpany.com/v1/infos/getFAQList?size=0')
+                await fetch('https://mousse.kunpany.com/v1/infos/getFAQList?size=0', {
+method: "GET",
+headers: {
+    'key': 'auth_platform',
+    'value': 'mousse'
+}
+})
                 .then((response) => response.json())
                 .then((item) => {//document.querySelector("#list").innerHTML=item.data
                     html_func_obj.add_list(item.data)
