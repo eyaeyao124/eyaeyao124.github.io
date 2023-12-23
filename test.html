@@ -52,6 +52,8 @@ const myHeaders = new Headers();
 myHeaders.append("key", "auth_platform");
 myHeaders.append("value", "mousse");
 
+console.log(myHeaders);
+
 const myRequest = new Request("https://mousse.kunpany.com/image/faq/165006307895300/-1", {
   method: "GET",
   headers: myHeaders,
