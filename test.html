@@ -1,7 +1,7 @@
 <img style="position:fixed;top:10px;left:10px;width:100px" id="target-img" />
 
 <script type="module">
-(async() => {
+(() => {
 // let response = await fetch('https://mousse.kunpany.com/image/faq/165006307895300/-1');
 
 // let blob = await response.blob(); // 응답을 Blob 객체 형태로 다운로드받습니다.
@@ -21,18 +21,45 @@
 //   }
 // })
 
-await fetch("https://mousse.kunpany.com/image/faq/165006307895300/-1", {
-method: "POST",
-headers: {
-    'key': 'auth_platform',
-    'value': 'mousse'
+// await fetch("https://mousse.kunpany.com/image/faq/165006307895300/-1", {
+// method: "POST",
+// headers: {
+//     'key': 'auth_platform',
+//     'value': 'mousse'
+// }
+// })
+// .then((response) => {
+// const imageURL = window.URL.createObjectURL(response.data)
+// document.getElementById("target-img").src = window.URL.createObjectURL(response.data);
+// })
+// .catch((error) => console.log("error:", error));
+
+async function fetchImage(request) {
+  try {
+    const response = await fetch(request);
+    if (!response.ok) {
+      throw new Error("Network response was not OK");
+    }
+    const myBlob = await response.blob();
+    document.getElementById("target-img").src = URL.createObjectURL(myBlob);
+  } catch (error) {
+    console.error("Error:", error);
+  }
 }
-})
-.then((response) => {
-const imageURL = window.URL.createObjectURL(response.data)
-document.getElementById("target-img").src = window.URL.createObjectURL(response.data);
-})
-.catch((error) => console.log("error:", error));
+
+const myHeaders = new Headers();
+
+myHeaders.append("key", "auth_platform");
+myHeaders.append("value", "mousse");
+
+const myRequest = new Request("https://mousse.kunpany.com/image/faq/165006307895300/-1", {
+  method: "GET",
+  headers: myHeaders,
+  mode: "cors",
+  cache: "default",
+});
+
+fetchImage(myRequest);
 
 })();
 </script>
